@@ -17,7 +17,7 @@ Um projeto simples desenvolvido em **Java** que permite gerenciar tarefas de for
    javac TaskManager.java
 
 
-
+--------
    ## ✨ Novidades na versão 2.0
 - Interface gráfica desenvolvida com **Java Swing**
 - Adição, conclusão e remoção de tarefas de forma visual
