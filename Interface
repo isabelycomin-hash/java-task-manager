@@ -1,0 +1,91 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.util.ArrayList;
+
+class Task {
+    String description;
+    boolean completed;
+
+    Task(String description) {
+        this.description = description;
+        this.completed = false;
+    }
+
+    @Override
+    public String toString() {
+        return description + (completed ? " ✅" : " ⏳");
+    }
+}
+
+public class TaskManager extends JFrame {
+    private ArrayList<Task> tasks = new ArrayList<>();
+    private DefaultListModel<Task> listModel = new DefaultListModel<>();
+    private JList<Task> taskJList = new JList<>(listModel);
+    private JTextField taskField = new JTextField(20);
+
+    public TaskManager() {
+        super("Gerenciador de Tarefas");
+
+        setLayout(new BorderLayout());
+
+        // Painel superior: campo para adicionar tarefa + botão
+        JPanel inputPanel = new JPanel();
+        JButton addButton = new JButton("Adicionar");
+        inputPanel.add(taskField);
+        inputPanel.add(addButton);
+        add(inputPanel, BorderLayout.NORTH);
+
+        // Lista de tarefas
+        add(new JScrollPane(taskJList), BorderLayout.CENTER);
+
+        // Painel inferior: botões de concluir e remover
+        JPanel controlPanel = new JPanel();
+        JButton completeButton = new JButton("Concluir");
+        JButton removeButton = new JButton("Remover");
+        controlPanel.add(completeButton);
+        controlPanel.add(removeButton);
+        add(controlPanel, BorderLayout.SOUTH);
+
+        // Ações dos botões
+        addButton.addActionListener(e -> addTask());
+        completeButton.addActionListener(e -> completeTask());
+        removeButton.addActionListener(e -> removeTask());
+
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(400, 400);
+        setLocationRelativeTo(null);
+        setVisible(true);
+    }
+
+    private void addTask() {
+        String description = taskField.getText().trim();
+        if (!description.isEmpty()) {
+            Task task = new Task(description);
+            tasks.add(task);
+            listModel.addElement(task);
+            taskField.setText("");
+        }
+    }
+
+    private void completeTask() {
+        int index = taskJList.getSelectedIndex();
+        if (index != -1) {
+            Task task = tasks.get(index);
+            task.completed = true;
+            taskJList.repaint();
+        }
+    }
+
+    private void removeTask() {
+        int index = taskJList.getSelectedIndex();
+        if (index != -1) {
+            tasks.remove(index);
+            listModel.remove(index);
+        }
+    }
+
+        public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> new TaskManager());
+    }
+}
