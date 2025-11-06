@@ -1,0 +1,90 @@
+//clase chama LoginScreen
+
+package com.mycompany.gerenciadordetarefas;
+
+import javax.swing.*;
+import java.awt.*;
+
+public class LoginScreen extends JFrame {
+    private JTextField userField = new JTextField(15);
+    private JPasswordField passField = new JPasswordField(15);
+
+    public LoginScreen() {
+        super("Login - Gerenciador de Tarefas");
+
+        // Cores e fonte
+        Color bgColor = new Color(245, 245, 245); // fundo claro
+        Color textColor = new Color(40, 40, 40);
+
+        setLayout(new BorderLayout());
+        getContentPane().setBackground(bgColor);
+
+        JPanel formPanel = new JPanel(new GridLayout(3, 2, 10, 10));
+        formPanel.setBackground(bgColor);
+        formPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+
+        JLabel title = new JLabel("Bem-vindo");
+        title.setFont(new Font("Arial", Font.BOLD, 20));
+        title.setHorizontalAlignment(SwingConstants.CENTER);
+
+        JLabel userLabel = new JLabel("Usuário:");
+        userLabel.setFont(new Font("Arial", Font.PLAIN, 14));
+        userLabel.setForeground(textColor);
+
+        JLabel passLabel = new JLabel("Senha:");
+        passLabel.setFont(new Font("Arial", Font.PLAIN, 14));
+        passLabel.setForeground(textColor);
+
+JButton loginBtn = new JButton("Entrar") {
+    @Override
+    protected void paintComponent(Graphics g) {
+        g.setColor(new Color(70,130,180)); // azul
+        g.fillRect(0, 0, getWidth(), getHeight());
+        super.paintComponent(g);
+    }
+};
+loginBtn.setOpaque(false);
+loginBtn.setForeground(Color.white);
+loginBtn.setFont(new Font("Arial", Font.BOLD, 14));
+loginBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+loginBtn.setFocusPainted(false);
+loginBtn.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
+
+
+        // Adicionando aos painéis
+        add(title, BorderLayout.NORTH);
+        formPanel.add(userLabel);
+        formPanel.add(userField);
+        formPanel.add(passLabel);
+        formPanel.add(passField);
+        formPanel.add(new JLabel());
+        formPanel.add(loginBtn);
+
+        add(formPanel, BorderLayout.CENTER);
+
+        // Ação botão login
+        loginBtn.addActionListener(e -> authenticate());
+
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(330, 220);
+        setLocationRelativeTo(null);
+        setVisible(true);
+    }
+
+    private void authenticate() {
+        String user = userField.getText();
+        String pass = String.valueOf(passField.getPassword());
+
+        if (user.equals("admin") && pass.equals("123")) {
+            dispose();
+            TaskManager app = new TaskManager();
+app.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "Login inválido");
+        }
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(LoginScreen::new);
+    }
+}
