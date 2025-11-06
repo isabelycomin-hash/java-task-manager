@@ -23,6 +23,7 @@ Um projeto simples desenvolvido em **Java** que permite gerenciar tarefas de for
 - Adição, conclusão e remoção de tarefas de forma visual
 - Lista dinâmica de tarefas com atualização em tempo real
 - Layout mais intuitivo e organizado
+- Tela de Login
 
 ## 🧩 Melhorias Técnicas
 - Código modular e orientado a objetos
